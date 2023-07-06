@@ -3,7 +3,7 @@ package com.asiainfo.mall.exception;
 /**
  * 统一异常类
  */
-public class MallException extends Exception {
+public class MallException extends RuntimeException {
     private final Integer code;
     private final String message;
 

@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+/**
+ * 用户模块
+ * restful统一响应对象 HttpSession登陆状态保持 统一异常处理
+ */
 @Controller
 public class UserController {
 
