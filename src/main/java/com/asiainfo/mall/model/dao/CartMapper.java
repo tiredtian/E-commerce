@@ -1,6 +1,7 @@
 package com.asiainfo.mall.model.dao;
 
 import com.asiainfo.mall.model.pojo.Cart;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,4 +17,6 @@ public interface CartMapper {
     int updateByPrimaryKeySelective(Cart record);
 
     int updateByPrimaryKey(Cart record);
+
+    Cart selectCartByUserIdAndProductId(@Param("userId") Integer userId, @Param("productId")Integer productId);
 }
