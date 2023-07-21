@@ -1,9 +1,11 @@
 package com.asiainfo.mall.model.dao;
 
 import com.asiainfo.mall.model.pojo.Category;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer id);
 

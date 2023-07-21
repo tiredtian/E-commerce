@@ -35,6 +35,11 @@ public class GlobalExceptionHandler {
     }
 
 
+    /**
+     * 参数校验异常
+     * @param e
+     * @return
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     public ApiRestResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {

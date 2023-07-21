@@ -45,7 +45,7 @@ public class CategoryController {
      * @return
      */
     @ApiOperation("后台添加目录")
-    @PostMapping("admin/category/add")
+    @PostMapping("/admin/category/add")
     @ResponseBody
     public ApiRestResponse addCategory(HttpSession session, @Valid @RequestBody AddCategoryReq addCategoryReq) {
         if (addCategoryReq.getName() == null || addCategoryReq.getType() == null ||
@@ -71,7 +71,7 @@ public class CategoryController {
      * @param session
      * @return
      */
-    @PostMapping("admin/category/update")
+    @PostMapping("/admin/category/update")
     @ResponseBody
     public ApiRestResponse updateCategory(@Valid @RequestBody UpdateCategoryReq updateCategoryReq, HttpSession session) {
         User currentUser = (User) session.getAttribute(Constant.MALL_USER);
@@ -89,24 +89,24 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("admin/category/delete")
+    @PostMapping("/admin/category/delete")
     @ResponseBody
     public ApiRestResponse deleteCategory(@RequestParam Integer id){
         categoryService.delete(id);
         return ApiRestResponse.success();
     }
 
-    @PostMapping("admin/category/list")
+    @PostMapping("/admin/category/list")
     @ResponseBody
     public ApiRestResponse listCategoryForAdmin(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
         PageInfo pageInfo = categoryService.listForAdmin(pageNum, pageSize);
         return ApiRestResponse.success(pageInfo);
     }
 
-    @PostMapping("category/list")
+    @PostMapping("/category/list")
     @ResponseBody
     public ApiRestResponse listCategoryForCustomer(){
-        List<CategoryVO> categoryVOS = categoryService.listForCustomer();
+        List<CategoryVO> categoryVOS = categoryService.listForCustomer(0);
         return ApiRestResponse.success(categoryVOS);
     }
 }
