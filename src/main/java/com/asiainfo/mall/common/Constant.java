@@ -1,5 +1,7 @@
 package com.asiainfo.mall.common;
 
+import com.asiainfo.mall.exception.MallException;
+import com.asiainfo.mall.exception.MallExceptionEnum;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -33,4 +35,45 @@ public class Constant {
         int UN_SELECTED = 0;//购物车未选中状态
         int SELECTED = 1;//购物车选中状态
     }
+
+    public enum OrderStatusEnum {
+        CANCELED(0, "用户已取消"),
+        NOT_PAID(10, "未付款"),
+        PAID(20, "已付款"),
+        DELIVERED(30, "已发货"),
+        FINISHED(40, "交易完成");
+        private String value;
+        private int code;
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        OrderStatusEnum(int code, String value) {
+            this.value = value;
+            this.code = code;
+        }
+
+        public static OrderStatusEnum codeOf(int code) {
+            for (OrderStatusEnum orderStatusEnum : values()) {
+                if (orderStatusEnum.getCode() == code) {
+                    return orderStatusEnum;
+                }
+            }
+            throw new MallException(MallExceptionEnum.NO_ENUM);
+        }
+    }
+
 }
