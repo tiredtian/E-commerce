@@ -12,6 +12,8 @@ import java.util.Set;
 public class Constant {
     public static final String SALT="fjalfa8*29_=0gw";
     public static final String MALL_USER = "mall_user";
+    public static final String EMAIL_SUBJECT = "验证码";
+    public static final String EMAIL_ADDRESS = "tianzp2000@163.com";
 
     public static String FILE_UPLOAD_DIR;
 
@@ -76,4 +78,10 @@ public class Constant {
         }
     }
 
+    public static final String JWT_KEY = "jwt-mall";
+    public static final String USER_ID = "user_id";
+    public static final String USER_NAME = "user_name";
+    public static final String USER_ROLE = "user_role";
+    public static final Long EXPIRE_TIME = 60 * 1000 * 60 * 24 * 1000L;//单位是毫秒
+    public static final String JWT_TOKEN = "jwt_token";
 }

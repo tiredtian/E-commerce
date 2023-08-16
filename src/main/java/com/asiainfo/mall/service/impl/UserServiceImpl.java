@@ -23,12 +23,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(String userName, String password) throws MallException {
+    public void register(String userName, String password,String emailAddress) throws MallException {
         User user = userMapper.selectByName(userName);
         if (user != null) {
             throw new MallException(MallExceptionEnum.NAME_EXISTED);
         }
         User user1 = new User();
+        user1.setEmailAddress(emailAddress);
         user1.setUsername(userName);
 //        user1.setPassword(password);
         try {
@@ -68,5 +69,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkAdminRole(User user) {
         return user.getRole().equals(2);
+    }
+
+    @Override
+    public boolean checkEmailRegistered(String emailAddress) {
+        User user = userMapper.selectOneByEmailAddress(emailAddress);
+        if (user != null) {
+            return false;
+        }
+        return true;
     }
 }

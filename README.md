@@ -1,5 +1,7 @@
 # testMall
-
+####
+统一异常处理、邮箱验证码发送、MD5密码加密、二维码生成、AOP统一鉴权、redis缓存验证码
+JWT header.payload.signature 头部 消息体 签名
 #### 介绍
 电商网站后端代码
 

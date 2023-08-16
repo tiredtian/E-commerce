@@ -2,9 +2,7 @@ package com.asiainfo.mall.model.dao;
 
 import com.asiainfo.mall.model.pojo.User;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -21,4 +19,6 @@ public interface UserMapper {
     User selectByName(String userName);
 
     User selectLogin(@Param("userName") String userName, @Param("password") String password);
+
+    User selectOneByEmailAddress(String emailAddress);
 }
