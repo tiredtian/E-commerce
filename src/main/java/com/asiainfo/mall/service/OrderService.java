@@ -1,8 +1,12 @@
 package com.asiainfo.mall.service;
 
 import com.asiainfo.mall.model.request.CreateOrderReq;
+import com.asiainfo.mall.model.vo.OrderStatisticsVO;
 import com.asiainfo.mall.model.vo.OrderVO;
 import com.github.pagehelper.PageInfo;
+
+import java.util.Date;
+import java.util.List;
 
 public interface OrderService {
     String create(CreateOrderReq createOrderReq);
@@ -24,4 +28,6 @@ public interface OrderService {
 
 
     void pay(String orderNo);
+
+    List<OrderStatisticsVO> statistics(Date startDate, Date endDate);
 }

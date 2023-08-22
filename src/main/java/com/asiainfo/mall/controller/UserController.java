@@ -227,4 +227,32 @@ public class UserController {
             return ApiRestResponse.error(MallExceptionEnum.WRONG_EMAIL);
         }
     }
+
+    /**
+     * 管理员校验登陆接口
+     */
+    @PostMapping("/adminLoginWithJwt")
+    @ResponseBody
+    public ApiRestResponse adminLoginWithJwt(@RequestParam("userName") String userName, @RequestParam("password") String password) {
+        if (StringUtils.isEmpty(userName)) {
+            return ApiRestResponse.error(MallExceptionEnum.NEED_USER_NAME);
+        }
+        if (StringUtils.isEmpty(password)) {
+            return ApiRestResponse.error(MallExceptionEnum.NEED_PASSWORD);
+        }
+        User user = userService.login(userName, password);
+        if (userService.checkAdminRole(user)) {
+            user.setPassword(null);
+            Algorithm algorithm = Algorithm.HMAC256(Constant.JWT_KEY);
+            String token = JWT.create()
+                    .withClaim(Constant.USER_NAME, user.getUsername())
+                    .withClaim(Constant.USER_ID, user.getId())
+                    .withClaim(Constant.USER_ROLE, user.getRole())
+                    .withExpiresAt(new Date(System.currentTimeMillis() + Constant.EXPIRE_TIME))
+                    .sign(algorithm);
+            return ApiRestResponse.success(token);
+        }else{
+            return ApiRestResponse.error(MallExceptionEnum.NEED_ADMIN);
+        }
+    }
 }

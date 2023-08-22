@@ -1,14 +1,19 @@
 package com.asiainfo.mall.controller;
 
 import com.asiainfo.mall.common.ApiRestResponse;
+import com.asiainfo.mall.model.vo.OrderStatisticsVO;
 import com.asiainfo.mall.service.OrderService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
+import java.util.List;
 
 @RestController
 public class OrderAdminController {
@@ -35,5 +40,13 @@ public class OrderAdminController {
     public ApiRestResponse finish(@RequestParam String orderNo) {
         orderService.finish(orderNo);
         return ApiRestResponse.success();
+    }
+
+    @ApiOperation("每日订单量统计")
+    @GetMapping("/admin/order/statistics")
+    public ApiRestResponse statistics(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                                      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date endDate) {
+        List<OrderStatisticsVO> statistics = orderService.statistics(startDate, endDate);
+        return ApiRestResponse.success(statistics);
     }
 }

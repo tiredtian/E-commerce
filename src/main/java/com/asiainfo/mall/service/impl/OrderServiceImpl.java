@@ -11,9 +11,11 @@ import com.asiainfo.mall.model.dao.ProductMapper;
 import com.asiainfo.mall.model.pojo.Order;
 import com.asiainfo.mall.model.pojo.OrderItem;
 import com.asiainfo.mall.model.pojo.Product;
+import com.asiainfo.mall.model.query.OrderStatisticsQuery;
 import com.asiainfo.mall.model.request.CreateOrderReq;
 import com.asiainfo.mall.model.vo.CartVO;
 import com.asiainfo.mall.model.vo.OrderItemVO;
+import com.asiainfo.mall.model.vo.OrderStatisticsVO;
 import com.asiainfo.mall.model.vo.OrderVO;
 import com.asiainfo.mall.service.CartService;
 import com.asiainfo.mall.service.OrderService;
@@ -53,8 +55,8 @@ public class OrderServiceImpl implements OrderService {
     OrderItemMapper orderItemMapper;
     @Autowired
     UserService userService;
-    @Value("${file.upload.ip}")
-    String ip;
+    @Value("${file.upload.uri}")
+    String uri;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -213,7 +215,7 @@ public class OrderServiceImpl implements OrderService {
             order.setEndTime(new Date());
             orderMapper.updateByPrimaryKeySelective(order);
         } else {
-            throw new MallException(MallExceptionEnum.WRONG_ORDER_STATUS);
+            throw new MallException(MallExceptionEnum.CANCEL_WRONG_ORDER_STATUS);
         }
     }
 
@@ -223,7 +225,7 @@ public class OrderServiceImpl implements OrderService {
                 .getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
 
-        String address = ip + ":" + request.getLocalPort();
+        String address = uri;
         String payUrl = "http://" + address + "/pay?orderNo=" + orderNo;
         try {
             QRCodeGenerator
@@ -260,7 +262,7 @@ public class OrderServiceImpl implements OrderService {
             order.setDeliveryTime(new Date());
             orderMapper.updateByPrimaryKeySelective(order);
         } else {
-            throw new MallException(MallExceptionEnum.WRONG_ORDER_STATUS);
+            throw new MallException(MallExceptionEnum.DELIVER_WRONG_ORDER_STATUS);
         }
     }
 
@@ -281,7 +283,7 @@ public class OrderServiceImpl implements OrderService {
             order.setEndTime(new Date());
             orderMapper.updateByPrimaryKeySelective(order);
         } else {
-            throw new MallException(MallExceptionEnum.WRONG_ORDER_STATUS);
+            throw new MallException(MallExceptionEnum.FINISH_WRONG_ORDER_STATUS);
         }
     }
 
@@ -297,7 +299,15 @@ public class OrderServiceImpl implements OrderService {
             order.setPayTime(new Date());
             orderMapper.updateByPrimaryKeySelective(order);
         } else {
-            throw new MallException(MallExceptionEnum.WRONG_ORDER_STATUS);
+            throw new MallException(MallExceptionEnum.PAY_WRONG_ORDER_STATUS);
         }
+    }
+    @Override
+    public List<OrderStatisticsVO> statistics(Date startDate, Date endDate) {
+        OrderStatisticsQuery orderStatisticsQuery = new OrderStatisticsQuery();
+        orderStatisticsQuery.setStartDate(startDate);
+        orderStatisticsQuery.setEndDate(endDate);
+        List<OrderStatisticsVO> orderStatisticsVOS = orderMapper.selectOrderStatistics(orderStatisticsQuery);
+        return orderStatisticsVOS;
     }
 }

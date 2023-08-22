@@ -1,7 +1,9 @@
 # testMall
 ####
-统一异常处理、邮箱验证码发送、MD5密码加密、二维码生成、AOP统一鉴权、redis缓存验证码
+统一异常处理、邮箱验证码发送、MD5密码加密、二维码生成、AOP统一鉴权、redis缓存验证码、文档处理工具poi/easyexcel、图片处理缩放水印
+
 JWT header.payload.signature 头部 消息体 签名
+流程：生成token，返回前端， 请求头中添加token， 后端AOP拦截特定请求，解析请求头获取数据
 #### 介绍
 电商网站后端代码
 
